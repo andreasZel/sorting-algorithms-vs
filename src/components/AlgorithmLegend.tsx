@@ -1,17 +1,19 @@
 import "../css/AlgorithmLegend.css";
 import Bar from "./Bar.tsx";
-import InsertionSort from "../functions/InsertionSort";
-
+import InsertionSort from "../functions/InsertionSort.tsx";
+import SelectionSort from "../functions/SelectionSort.tsx";
 import { useState, useEffect } from "react";
 
 interface Props {
   algorithm_name: string;
+  algorithm:number;
   data: number[];
 }
 
-const AlgorithmLegend = ({ algorithm_name, data }: Props) => {
+const AlgorithmLegend = ({ algorithm_name, algorithm, data }: Props) => {
 
-  const [bars, changebars] = useState<number[]>(data);
+  const bars:number[] = [...data];
+  
   const [ishover, swaphover] = useState<boolean>(false);
   const [barArray, updatebarArray] = useState<React.ReactElement[]>([<Bar key={1} inputStyle={{
     backgroundColor: "#ffd700", 
@@ -32,7 +34,6 @@ const AlgorithmLegend = ({ algorithm_name, data }: Props) => {
           }}/>
       )
     })
-    console.log("pero");
     updatebarArray(temparray);
   }, []);
 
@@ -41,7 +42,17 @@ const AlgorithmLegend = ({ algorithm_name, data }: Props) => {
       <button id="legend_title"
       onMouseEnter={() => swaphover(true)}
       onMouseLeave={() => swaphover(false)}
-      onClick={() => InsertionSort({bars, changebars, barArray, updatebarArray})}
+      onClick={() => {
+        switch(algorithm) {
+          case 1:
+            InsertionSort({bars, barArray, updatebarArray});
+            break;
+          case 2:
+            SelectionSort({bars, barArray, updatebarArray});
+            break;
+        }
+        }
+      }
       >{ishover === true ? "Run algorithm" : algorithm_name}</button>
       <div id="display_array">
         {barArray}

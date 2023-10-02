@@ -2,11 +2,10 @@ import "../css/PopUp.css"
 import { useState } from 'react';
 
 interface Props {
-    data:number[];
     changedata:React.Dispatch<React.SetStateAction<number[]>>;
   }
 
-const PopUp = ({data, changedata}:Props) => {
+const PopUp = ({changedata}:Props) => {
     
     let [numberOfElements, changeInput] = useState<number>(0);
 
@@ -17,7 +16,6 @@ const PopUp = ({data, changedata}:Props) => {
         for (i; i < numberOfElements; i++){
             temparray.push(Math.floor((Math.random() * 100) + 1));
         }
-        console.log(data);
         changedata(temparray);
     }
 

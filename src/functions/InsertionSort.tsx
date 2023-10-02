@@ -1,11 +1,16 @@
+//delay function to display the results in real-time
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms));
+}
+
 type Props = {
     bars:number[];
-    changebars:React.Dispatch<React.SetStateAction<number[]>>;
     barArray:React.ReactElement[];
     updatebarArray:React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>>[]>>;
 }
 
-const InsertionSort = ({bars, changebars, barArray, updatebarArray}:Props) => {
+ const InsertionSort = async ({bars, barArray, updatebarArray}:Props) => {
+    
     let i:number;
     let j:number;
     
@@ -15,11 +20,10 @@ const InsertionSort = ({bars, changebars, barArray, updatebarArray}:Props) => {
     let propkey:React.ReactElement;
     let bararrayCP:React.ReactElement<any, string | React.JSXElementConstructor<any>>[] | undefined;
 
-    //console.log(bars);
-    bararrayCP = [...barArray];
+    bararrayCP = barArray;
     arrayCP = bars;
 
-    for (i = 1; i < arrayCP.length; i++){
+    for (i = 1; i < arrayCP.length; i++) {
         key = arrayCP[i];
         propkey = bararrayCP[i];
         j = i - 1; 
@@ -28,19 +32,18 @@ const InsertionSort = ({bars, changebars, barArray, updatebarArray}:Props) => {
             
             arrayCP[j + 1] = arrayCP[j];
             bararrayCP[j + 1] = bararrayCP[j];
-            
-            //changebars(arrayCP);
             updatebarArray(bararrayCP);
             j = j - 1;
         }
 
         arrayCP[j + 1] = key;
         bararrayCP[j + 1] = propkey;
-        //changebars(arrayCP);
-        updatebarArray(bararrayCP);
+
+        updatebarArray([...bararrayCP]);
+        console.log(arrayCP);
+        await delay(100);
     }
 
-    //console.log(bars);
 }
 
 export default InsertionSort;

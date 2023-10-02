@@ -10,11 +10,8 @@ const App: React.FC = () => {
   if (data.length > 0){
     return (
       <div className="display_grid">
-        <AlgorithmLegend algorithm_name={"Insertion Sort"} data={data}/>
-        <AlgorithmLegend algorithm_name={"Insertion sort"} data={data}/>
-        <AlgorithmLegend algorithm_name={"Insertion sort"} data={data}/>
-        <AlgorithmLegend algorithm_name={"Insertion sort"} data={data}/>
-        <AlgorithmLegend algorithm_name={"Insertion sort"} data={data}/>
+        <AlgorithmLegend algorithm_name={"Insertion Sort"} algorithm={1} data={data}/>
+        <AlgorithmLegend algorithm_name={"Selection Sort"} algorithm={2} data={data}/>
       </div>
     )
   } else {
