@@ -9,6 +9,17 @@ const PopUp = ({changedata}:Props) => {
     
     let [numberOfElements, changeInput] = useState<number>(0);
 
+    const handleInput = (input:string) => {
+
+        let tempnum:number = parseInt(input);
+
+        if (isNaN(tempnum)) {
+            changeInput(0);
+        } else {
+            changeInput(tempnum); 
+        }
+    }
+
     const applyRandomValues = () => {
         let i:number = 0;
         let temparray:number[] = [];
@@ -25,7 +36,7 @@ const PopUp = ({changedata}:Props) => {
                 <h3>How many numbers to sort?</h3>
                 <div className="break"></div>
                 <div id="input_conteiner">
-                    <input onChange={(e) => {changeInput(Number(e.target.value))}} value={numberOfElements?.toString()}/>
+                    <input onChange={(e) => {handleInput(e.target.value)}} value={numberOfElements}/>
                     <button onClick={applyRandomValues}>Go</button>
                 </div>
             </div>
