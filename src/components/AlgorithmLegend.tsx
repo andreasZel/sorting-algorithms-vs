@@ -2,6 +2,8 @@ import "../css/AlgorithmLegend.css";
 import Bar from "./Bar.tsx";
 import InsertionSort from "../functions/InsertionSort.tsx";
 import SelectionSort from "../functions/SelectionSort.tsx";
+import BubbleSort from "../functions/BubbleSort.tsx";
+import MergeSort from "../functions/MergeSort.tsx";
 import { useState, useEffect } from "react";
 
 interface Props {
@@ -49,6 +51,12 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data }: Props) => {
             break;
           case 2:
             SelectionSort({bars, barArray, updatebarArray});
+            break;
+          case 3:
+            BubbleSort({bars, barArray, updatebarArray});
+            break;
+          case 4:
+            MergeSort({bars, barArray, updatebarArray});
             break;
         }
         }

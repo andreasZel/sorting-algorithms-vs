@@ -24,6 +24,7 @@ type Props = {
     arrayCP = bars;
 
     for (i = 1; i < arrayCP.length; i++) {
+
         key = arrayCP[i];
         propkey = bararrayCP[i];
         j = i - 1; 
@@ -32,7 +33,7 @@ type Props = {
             
             arrayCP[j + 1] = arrayCP[j];
             bararrayCP[j + 1] = bararrayCP[j];
-            updatebarArray(bararrayCP);
+            updatebarArray([...bararrayCP]);
             j = j - 1;
         }
 

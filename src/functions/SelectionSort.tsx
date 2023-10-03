@@ -25,6 +25,7 @@ const SelectionSort = async ({bars, barArray, updatebarArray}:Props) => {
     bararrayCP = barArray; 
 
     for (i = 0; i < bars.length - 1; i++) {
+        
         min = i;
 
         for (j = i + 1; j < bars.length; j++){
@@ -34,6 +35,7 @@ const SelectionSort = async ({bars, barArray, updatebarArray}:Props) => {
         }
 
         if(min != i){
+
             key = arrayCP[i];          
             arrayCP[i] = arrayCP[min];
             arrayCP[min] = key;
