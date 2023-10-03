@@ -41,7 +41,6 @@ type Props = {
         bararrayCP[j + 1] = propkey;
 
         updatebarArray([...bararrayCP]);
-        console.log(arrayCP);
         await delay(100);
     }
 
