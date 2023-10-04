@@ -1,5 +1,3 @@
-import Bar from "../components/Bar.tsx";
-
 //delay function to display the results in real-time
 function delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms));
@@ -17,50 +15,32 @@ const MergeSort = ({bars, barArray, updatebarArray}:Props) => {
     let l:number = 0;
     let r:number = arrayCP.length - 1;
 
-    mergeSort({arrayCP, bararrayCP, updatebarArray, l, r});
+    mergeSort({arrayCP, bararrayCP, updatebarArray});
 }
 
-const mergeSort = async ({arrayCP, bararrayCP, updatebarArray, l, r}:{arrayCP:number[], bararrayCP:React.ReactElement[], updatebarArray:React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>>[]>>, l:number, r:number}) => {
+const mergeSort = async ({arrayCP, bararrayCP, updatebarArray}:{arrayCP:number[], bararrayCP:React.ReactElement[], updatebarArray:React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>>[]>>}) => {
     
-    let lcp:number = l;
-    let rcp:number = r;
+    var curr_size;
+    var left_start;
 
-    if (lcp < rcp) {
+    for (curr_size = 1; curr_size <= arrayCP.length - 1; curr_size = 2 * curr_size) {
 
-        let m:number;
+        for (left_start = 0; left_start < arrayCP.length - 1; left_start += 2 * curr_size) {
+            
+            var m = Math.min(left_start + curr_size - 1, arrayCP.length - 1);
 
-        m = Math.floor(l + (r - l) / 2);
-        r = m;
-        // Sort first and second halves
-        mergeSort({arrayCP, bararrayCP, updatebarArray, l, r});
+            var r = Math.min(left_start + 2 * curr_size - 1, arrayCP.length - 1);
 
-        l = m + 1;
-        r = rcp;
-        mergeSort({arrayCP, bararrayCP, updatebarArray, l, r});
- 
-        l = lcp;
-        merge({arrayCP, l, m, r});
-
-        let temparray = arrayCP.map((item, index) => {
-            return (
-                <Bar 
-                key={index}
-                inputStyle={
-                    {
-                    backgroundColor: "#ffd700", 
-                    width: `${400/arrayCP.length}px`, 
-                    height: `${(340*item)/Math.max(...arrayCP)}px`,
-                }}/>
-            )
-        })
-
-        updatebarArray([...temparray]);
-        await delay(100);
+            var l = left_start
+            merge({arrayCP, bararrayCP, updatebarArray, l, m, r});
+            await delay(150);
+        }
     }
-
+    updatebarArray([...bararrayCP]);
+    delay(100);
 };
 
-const merge = ({arrayCP, l, m, r}:{arrayCP:number[], l:number, m:number, r:number}) => {
+const merge = async ({arrayCP, bararrayCP, updatebarArray, l, m, r}:{arrayCP:number[], bararrayCP:React.ReactElement[], updatebarArray:React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>>[]>>, l:number, m:number, r:number}) => {
     
     let i:number;
     let j:number;
@@ -71,12 +51,19 @@ const merge = ({arrayCP, l, m, r}:{arrayCP:number[], l:number, m:number, r:numbe
     // Create temp arrays
     let L:number[] = [];
     let R:number[] = [];
+    let LB:React.ReactElement[] = [];
+    let RB:React.ReactElement[] = [];
+
  
     // Copy data to temp arrays L[] and R[]
-    for (i = 0; i < n1; i++)
+    for (i = 0; i < n1; i++){
         L[i] = arrayCP[l + i];
-    for (j = 0; j < n2; j++)
+        LB[i] = bararrayCP[l + i];
+    }
+    for (j = 0; j < n2; j++){
         R[j] = arrayCP[m + 1 + j];
+        RB[j] = bararrayCP[m + 1 + j];
+    }
  
     // Merge the temp arrays back into arr[l..r]
     i = 0;
@@ -85,12 +72,15 @@ const merge = ({arrayCP, l, m, r}:{arrayCP:number[], l:number, m:number, r:numbe
     while (i < n1 && j < n2) {
         if (L[i] <= R[j]) {
             arrayCP[k] = L[i];
+            bararrayCP[k] = LB[i];
             i++;
         }
         else {
             arrayCP[k] = R[j];
+            bararrayCP[k] = RB[j];
             j++;
         }
+
         k++;
     }
  
@@ -98,14 +88,18 @@ const merge = ({arrayCP, l, m, r}:{arrayCP:number[], l:number, m:number, r:numbe
     // if there are any
     while (i < n1) {
         arrayCP[k] = L[i];
+        bararrayCP[k] = LB[i];
         i++;
         k++;
     }
- 
+
     // Copy the remaining elements of R[],
     // if there are any
     while (j < n2) {
         arrayCP[k] = R[j];
+        bararrayCP[k] = RB[j];
+        updatebarArray([...bararrayCP]);
+        await delay(20);
         j++;
         k++;
     }
