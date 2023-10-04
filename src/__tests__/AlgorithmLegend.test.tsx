@@ -22,33 +22,36 @@ const MockupWithData = ({testInput, inputAlgo, inputAlgoNum}:Props) => {
         />);
 }
 
-it("If props are passed correctly, display the legend of the Algorithm selected", () => {
-
-    render(<MockupWithData testInput={[1, 2, 3]} inputAlgo={"Insertion Sort"} inputAlgoNum={1}/>);
-
-    let Gridbutton = screen.getAllByRole('button', {name: /Insertion Sort/i});
-
-    expect(Gridbutton.length).toEqual(1);
-});
-
-it("If props are passed correctly, number of bars should be equal to the data passed", () => {
-
-    const {container} = render(<MockupWithData testInput={[1, 2, 3]} inputAlgo={"Insertion Sort"} inputAlgoNum={1}/>);
+describe ("Testing for AlgorithmLegend Component", () => {
     
-    const dispayGrid = container.querySelector('#display_array');
+    it("If props are passed correctly, display the legend of the Algorithm selected", () => {
 
-    expect(dispayGrid?.childElementCount).toEqual(3);
-});
+        render(<MockupWithData testInput={[1, 2, 3]} inputAlgo={"Insertion Sort"} inputAlgoNum={1}/>);
 
-it("If algorithm is rendered, pressing the button should sort the array", async () => {
+        let Gridbutton = screen.getAllByRole('button', {name: /Insertion Sort/i});
 
-    render(<MockupWithData testInput={[3, 2, 1]} inputAlgo={"Insertion Sort"} inputAlgoNum={1}/>);
+        expect(Gridbutton.length).toEqual(1);
+    });
+
+    it("If props are passed correctly, number of bars should be equal to the data passed", () => {
+
+        const {container} = render(<MockupWithData testInput={[1, 2, 3]} inputAlgo={"Insertion Sort"} inputAlgoNum={1}/>);
+        
+        const dispayGrid = container.querySelector('#display_array');
+
+        expect(dispayGrid?.childElementCount).toEqual(3);
+    });
+
+    it("If algorithm is rendered, pressing the button should sort the array", async () => {
+
+        render(<MockupWithData testInput={[3, 2, 1]} inputAlgo={"Insertion Sort"} inputAlgoNum={1}/>);
+        
+        let Gridbutton = screen.getByRole('button', {name: /Insertion Sort/i});
     
-    let Gridbutton = screen.getByRole('button', {name: /Insertion Sort/i});
-   
-    const spy = jest.spyOn(utils, 'default');
+        const spy = jest.spyOn(utils, 'default');
 
-    await userEvent.click(Gridbutton);
+        await userEvent.click(Gridbutton);
 
-    expect(spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
+    });
 });
