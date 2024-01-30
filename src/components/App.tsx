@@ -1,7 +1,12 @@
+//delay function to display the results in real-time
+function delay(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 import '../css/App.css';
 import AlgorithmLegend from "./AlgorithmLegend.tsx";
 import PopUp from './PopUp.tsx';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const App: React.FC = () => {
 
@@ -31,8 +36,8 @@ const App: React.FC = () => {
         {!isMenuVisible && <button className='menu' title='menu' onClick={() => [alterMenuState((true))]}>☰</button>}
 
         {isMenuVisible && <div className='menu_btns'>
-          <button title='run all' disabled={overalComputing || disableButtons} onClick={() => { changedata([...data]); alterShouldRunAll(true); }} className='runAllAlgorithmsBtn'>Run All</button>
-          <button title='reset' disabled={overalComputing || disableButtons} onClick={() => { alterShouldRunAll(false); enableDisableBtns(false); changedata([...data]); }} onMouseOut={() => { alterRotation("horizontal-tb") }} onMouseOver={() => { alterRotation("vertical-rl") }}><span style={{ writingMode: rotate }}>↻</span></button>
+          <button title='run all' disabled={overalComputing || disableButtons} onClick={async() => { changedata([...data]); await delay(300); alterShouldRunAll(true); }} className='runAllAlgorithmsBtn'>Run All</button>
+          <button title='reset' disabled={overalComputing || disableButtons} onClick={() => { enableDisableBtns(false); changedata([...data]); }} onMouseOut={() => { alterRotation("horizontal-tb") }} onMouseOver={() => { alterRotation("vertical-rl") }}><span style={{ writingMode: rotate }}>↻</span></button>
           <button title='go back' disabled={overalComputing || disableButtons} onClick={() => { alterShouldRunAll(false); enableDisableBtns(false); changedata([]) }}>↩</button>
         </div>}
       </div>

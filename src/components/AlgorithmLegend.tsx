@@ -22,7 +22,6 @@ interface Props {
 const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overalComputing, alterOveralComputing, alterFinished, enableDisableBtns, alterShouldRunAll }: Props) => {
 
   const [isComputing, alterComputingState] = useState(false);
-
   var bars: number[] = [...data];
 
   const [ishover, swaphover] = useState<boolean>(false);
@@ -60,7 +59,7 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overal
       )
     })
 
-    await updatebarArray(temparray);
+    updatebarArray(temparray);
   }
 
   useEffect(() => {
@@ -84,7 +83,7 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overal
             finished();
             break;
           case 4:
-            await MergeSort({ bars, barArray, updatebarArray });
+            MergeSort({ bars, barArray, updatebarArray });
             finished();
             break;
           case 5:
