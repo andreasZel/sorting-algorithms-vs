@@ -66,7 +66,6 @@ function inorderRec(root: TreeNode | null) {
 
   if (root != null) {
     inorderRec(root.left);
-    console.log(root.key)
     tempBarArr.push(root.key as number);
     inorderRec(root.right);
   }

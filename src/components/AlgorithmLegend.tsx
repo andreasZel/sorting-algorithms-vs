@@ -14,10 +14,12 @@ interface Props {
   shouldRunAll: boolean;
   overalComputing: boolean;
   alterOveralComputing: React.Dispatch<React.SetStateAction<boolean>>;
-  alterFinished: React.Dispatch<React.SetStateAction<number>>
+  alterFinished: React.Dispatch<React.SetStateAction<number>>;
+  enableDisableBtns: React.Dispatch<React.SetStateAction<boolean>>;
+  alterShouldRunAll: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overalComputing, alterOveralComputing, alterFinished }: Props) => {
+const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overalComputing, alterOveralComputing, alterFinished, enableDisableBtns, alterShouldRunAll }: Props) => {
 
   const [isComputing, alterComputingState] = useState(false);
 
@@ -34,6 +36,7 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overal
     alterFinished((prevVal) => {
       if (prevVal === 4) {
         alterOveralComputing(false);
+        alterShouldRunAll(false);
         return 0;
       }
 
@@ -41,7 +44,7 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overal
     })
   }
 
-  function resetBarValues() {
+  async function resetBarValues() {
     bars = [...data];
 
     let temparray = bars.map((item, index) => {
@@ -56,14 +59,16 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overal
             }} />
       )
     })
-    updatebarArray(temparray);
+
+    await updatebarArray(temparray);
   }
 
   useEffect(() => {
 
     const runAllAlgorithms = async () => {
-
+      
       if (shouldRunAll) {
+        
         alterOveralComputing(true);
         switch (algorithm) {
           case 1:
@@ -109,28 +114,38 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overal
           switch (algorithm) {
             case 1:
               alterComputingState(true);
+              enableDisableBtns(true);
               await InsertionSort({ bars, barArray, updatebarArray });
+              enableDisableBtns(false);
               alterComputingState(false);
               break;
             case 2:
               alterComputingState(true);
+              enableDisableBtns(true);
               await SelectionSort({ bars, barArray, updatebarArray });
               alterComputingState(false);
+              enableDisableBtns(false);
               break;
             case 3:
               alterComputingState(true);
+              enableDisableBtns(true);
               await BubbleSort({ bars, barArray, updatebarArray });
               alterComputingState(false);
+              enableDisableBtns(false);
               break;
             case 4:
               alterComputingState(true);
+              enableDisableBtns(true);
               await MergeSort({ bars, barArray, updatebarArray });
               alterComputingState(false);
+              enableDisableBtns(false);
               break;
             case 5:
               alterComputingState(true);
+              enableDisableBtns(true);
               await TreeSort({ bars, updatebarArray });
               alterComputingState(false);
+              enableDisableBtns(false);
               break;
           }
 

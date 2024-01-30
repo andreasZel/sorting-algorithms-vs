@@ -43,7 +43,6 @@ const SelectionSort = async ({ bars, barArray, updatebarArray }: Props) => {
             propkey = bararrayCP[i];
             bararrayCP[i] = bararrayCP[min];
             bararrayCP[min] = propkey;
-            console.log(arrayCP);
 
             updatebarArray([...bararrayCP]);
             await delay(100);
