@@ -11,11 +11,17 @@ interface Props {
   algorithm_name: string;
   algorithm: number;
   data: number[];
+  shouldRunAll: boolean;
+  overalComputing: boolean;
+  alterOveralComputing: React.Dispatch<React.SetStateAction<boolean>>;
+  alterFinished: React.Dispatch<React.SetStateAction<number>>
 }
 
-const AlgorithmLegend = ({ algorithm_name, algorithm, data }: Props) => {
+const AlgorithmLegend = ({ algorithm_name, algorithm, data, shouldRunAll, overalComputing, alterOveralComputing, alterFinished }: Props) => {
 
-  const bars: number[] = [...data];
+  const [isComputing, alterComputingState] = useState(false);
+
+  var bars: number[] = [...data];
 
   const [ishover, swaphover] = useState<boolean>(false);
   const [barArray, updatebarArray] = useState<React.ReactElement[]>([<Bar key={1} inputStyle={{
@@ -24,7 +30,20 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data }: Props) => {
     height: `${(340 * 1) / Math.max(...bars)}px`,
   }} />]);
 
-  useEffect(() => {
+  function finished() {
+    alterFinished((prevVal) => {
+      if (prevVal === 4) {
+        alterOveralComputing(false);
+        return 0;
+      }
+
+      return prevVal + 1;
+    })
+  }
+
+  function resetBarValues() {
+    bars = [...data];
+
     let temparray = bars.map((item, index) => {
       return (
         <Bar
@@ -38,31 +57,83 @@ const AlgorithmLegend = ({ algorithm_name, algorithm, data }: Props) => {
       )
     })
     updatebarArray(temparray);
-  }, []);
+  }
+
+  useEffect(() => {
+
+    const runAllAlgorithms = async () => {
+
+      if (shouldRunAll) {
+        alterOveralComputing(true);
+        switch (algorithm) {
+          case 1:
+            await InsertionSort({ bars, barArray, updatebarArray });
+            finished();
+            break;
+          case 2:
+            await SelectionSort({ bars, barArray, updatebarArray });
+            finished();
+            break;
+          case 3:
+            await BubbleSort({ bars, barArray, updatebarArray });
+            finished();
+            break;
+          case 4:
+            await MergeSort({ bars, barArray, updatebarArray });
+            finished();
+            break;
+          case 5:
+            await TreeSort({ bars, updatebarArray });
+            finished();
+            break;
+        }
+      }
+    }
+
+    runAllAlgorithms();
+
+  }, [shouldRunAll])
+
+  useEffect(() => {
+    resetBarValues();
+  }, [data]);
 
   return (
     <div className="algorithm_legend">
       <button id="legend_title"
+        disabled={isComputing || overalComputing}
         onMouseEnter={() => swaphover(true)}
         onMouseLeave={() => swaphover(false)}
-        onClick={() => {
+        onClick={async () => {
+
           switch (algorithm) {
             case 1:
-              InsertionSort({ bars, barArray, updatebarArray });
+              alterComputingState(true);
+              await InsertionSort({ bars, barArray, updatebarArray });
+              alterComputingState(false);
               break;
             case 2:
-              SelectionSort({ bars, barArray, updatebarArray });
+              alterComputingState(true);
+              await SelectionSort({ bars, barArray, updatebarArray });
+              alterComputingState(false);
               break;
             case 3:
-              BubbleSort({ bars, barArray, updatebarArray });
+              alterComputingState(true);
+              await BubbleSort({ bars, barArray, updatebarArray });
+              alterComputingState(false);
               break;
             case 4:
-              MergeSort({ bars, barArray, updatebarArray });
+              alterComputingState(true);
+              await MergeSort({ bars, barArray, updatebarArray });
+              alterComputingState(false);
               break;
             case 5:
-              TreeSort({ bars, updatebarArray });
+              alterComputingState(true);
+              await TreeSort({ bars, updatebarArray });
+              alterComputingState(false);
               break;
           }
+
         }
         }
       >{ishover === true ? "Run algorithm" : algorithm_name}</button>

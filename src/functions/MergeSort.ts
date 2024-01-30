@@ -9,13 +9,11 @@ type Props = {
     updatebarArray: React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>>[]>>;
 }
 
-const MergeSort = ({ bars, barArray, updatebarArray }: Props) => {
+const MergeSort = async({ bars, barArray, updatebarArray }: Props) => {
     let arrayCP: number[] = [...bars];
     let bararrayCP: React.ReactElement[] = [...barArray];
-    let l: number = 0;
-    let r: number = arrayCP.length - 1;
 
-    mergeSort({ arrayCP, bararrayCP, updatebarArray });
+    await mergeSort({ arrayCP, bararrayCP, updatebarArray });
 }
 
 const mergeSort = async ({ arrayCP, bararrayCP, updatebarArray }: { arrayCP: number[], bararrayCP: React.ReactElement[], updatebarArray: React.Dispatch<React.SetStateAction<React.ReactElement<any, string | React.JSXElementConstructor<any>>[]>> }) => {

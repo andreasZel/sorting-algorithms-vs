@@ -80,7 +80,7 @@ async function treeins(arr: number[], updatebarArray: React.Dispatch<React.SetSt
   }
 }
 
-export function TreeSort({ bars, updatebarArray }: Props) {
-  treeins([...bars], updatebarArray);
+export async function TreeSort({ bars, updatebarArray }: Props) {
+  await treeins([...bars], updatebarArray);
 }
 
