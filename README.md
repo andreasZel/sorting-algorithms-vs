@@ -2,7 +2,7 @@
 
 Mini Project to familiarize with <i><b>Jest unit and integration testing</b></i>.
 <br/>
-still in progress.
+It is containerized, so you can pull the image and follow the instruction in [DockerHub](https://hub.docker.com/repository/docker/zelhs/sortinghelsinki/general)
 <br/>
 - Type the number of elements you want to sort, they will be choosen ranomly and placed in an array
 - Click the algorithm you wish to see sorting the array or <i><b> run all </b></i> from the bottom menu to run all algorithms at the same time
