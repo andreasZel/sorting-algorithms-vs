@@ -3,7 +3,7 @@ name: Release Sorting algorythms
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build: # name of the job
