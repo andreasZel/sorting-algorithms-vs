@@ -1,12 +1,21 @@
-FROM node:18
+FROM node:18-alpine AS buildstage
 
 EXPOSE 8080
+
+WORKDIR /usr/src/app
 
 COPY . .
 
 RUN npm install
 
 RUN npm run build
+
+
+FROM node:18-alpine
+
+WORKDIR /usr/src/app
+
+COPY --from=buildstage /usr/src/app/build/ /usr/src/app/build/
 
 RUN npm install -g serve
 
