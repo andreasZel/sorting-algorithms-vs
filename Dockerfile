@@ -17,6 +17,8 @@ WORKDIR /usr/src/app
 
 COPY --from=buildstage /usr/src/app/dist/ /usr/src/app/dist/
 
-RUN npm install -g serve
+RUN npm install -g serve && adduser -D appuser
+
+USER appuser
 
 CMD ["serve", "-s", "dist", "-l", "8080"]
