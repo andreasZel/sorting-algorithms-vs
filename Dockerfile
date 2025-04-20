@@ -15,7 +15,7 @@ FROM node:18-alpine
 
 WORKDIR /usr/src/app
 
-COPY --from=buildstage /usr/src/app/build/ /usr/src/app/build/
+COPY --from=buildstage /usr/src/app/dist/ /usr/src/app/dist/
 
 RUN npm install -g serve
 
